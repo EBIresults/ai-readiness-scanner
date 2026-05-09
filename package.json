@@ -1,0 +1,15 @@
+{
+  "name": "ai-readiness-scanner",
+  "version": "1.0.0",
+  "description": "AI Readiness Scanner — Check any business's visibility to AI search",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^2.7.0"
+  }
+}
