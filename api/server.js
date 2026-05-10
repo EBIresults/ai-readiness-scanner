@@ -166,5 +166,61 @@ app.post('/api/lead', async (req, res) => {
   }
 });
 
+// ── API: Capture lead (from checkout page) ──
+app.post('/api/capture-lead', async (req, res) => {
+  try {
+    const { name, email, phone, website, city, state, coupon } = req.body;
+    // Send notification to Renée
+    await sgMail.send({
+      to: '14calder@gmail.com',
+      from: { email: FROM_EMAIL, name: 'EBI Results Scanner' },
+      replyTo: REPLY_TO,
+      subject: `💰 New $7 Lead: ${name} — ${website || 'no website'}`,
+      html: `<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Phone:</strong> ${phone || 'none'}</p>
+<p><strong>Website:</strong> ${website || 'none'}</p>
+<p><strong>City/State:</strong> ${city || ''} ${state || ''}</p>
+<p><strong>Coupon:</strong> ${coupon || 'none'}</p>`
+    });
+    // Push to Close CRM
+    await pushToClose({ name, email, phone, url: website, score: 0, issues: 0, scannedBy: 'self' });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('capture-lead error:', err.message);
+    res.json({ success: false });
+  }
+});
+
+// ── API: Create Stripe checkout session ──
+app.post('/api/create-checkout-session', async (req, res) => {
+  try {
+    const { amount, customerEmail, product, coupon } = req.body;
+    // For now, redirect to the static checkout page
+    // Real Stripe session creation requires the stripe npm package
+    const finalAmount = amount || 700;
+    
+    // Send email notification to Renée
+    await sgMail.send({
+      to: '14calder@gmail.com',
+      from: { email: FROM_EMAIL, name: 'EBI Results Scanner' },
+      replyTo: REPLY_TO,
+      subject: `🛒 Checkout initiated — $${(finalAmount/100).toFixed(2)} — ${customerEmail || 'no email'}`,
+      html: `<p><strong>Amount:</strong> $${(finalAmount/100).toFixed(2)}</p>
+<p><strong>Customer:</strong> ${customerEmail || 'unknown'}</p>
+<p><strong>Product:</strong> ${product || 'ai-readiness'}</p>
+<p><strong>Coupon:</strong> ${coupon || 'none'}</p>`
+    });
+
+    // For now, redirect to the scanner (in production, create a Stripe session)
+    res.json({
+      url: 'https://buy.stripe.com/5kQ8wP9Cw0yp9bt2BQ7Vm05'
+    });
+  } catch (err) {
+    console.error('create-checkout error:', err.message);
+    res.json({ error: err.message });
+  }
+});
+
 // ── Export for Vercel ──
 module.exports = app;
