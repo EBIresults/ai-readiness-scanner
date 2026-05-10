@@ -200,7 +200,7 @@ document.getElementById('scan-btn').addEventListener('click', async function() {
   try {
     // Step 1: Capture lead
     statusText.textContent = 'Saving your request...';
-    const leadRes = await fetch('/api/scan-lead', {
+    const leadRes = await fetch('/api/lead', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ url: cleanUrl, email, name, phone })
@@ -208,7 +208,7 @@ document.getElementById('scan-btn').addEventListener('click', async function() {
 
     // Step 2: Run the scan
     statusText.textContent = 'Checking AI crawlability...';
-    const scanRes = await fetch('/api/run-scan', {
+    const scanRes = await fetch('/api/scan', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ url: cleanUrl, email, name, phone })

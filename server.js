@@ -282,8 +282,12 @@ async function sendReport({ to, name, url, result }) {
 
 // ── Start ──
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ AI Scanner server running on port ${PORT}`);
-  console.log(`📧 From: ${FROM_EMAIL}`);
-  console.log(`📄 Endpoints: POST /api/scan, POST /api/lead`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ AI Scanner server running on port ${PORT}`);
+    console.log(`📧 From: ${FROM_EMAIL}`);
+    console.log(`📄 Endpoints: POST /api/scan, POST /api/lead`);
+  });
+}
+
+module.exports = app;
