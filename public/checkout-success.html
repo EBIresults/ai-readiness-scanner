@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Payment Successful — Your AI Readiness Report</title>
+ <style>
+ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; text-align: center; padding: 60px 20px; line-height: 1.6; }
+ .container { max-width: 640px; margin: 0 auto; }
+ .check { font-size: 72px; margin-bottom: 16px; }
+ h1 { font-size: 32px; margin-bottom: 16px; }
+ .subtext { color: #94a3b8; font-size: 16px; margin-bottom: 24px; }
+ .offer-card { background: #1e293b; border-radius: 16px; padding: 28px; margin: 20px 0; text-align: left; border: 1px solid #334155; }
+ .offer-card h3 { font-size: 20px; margin-bottom: 12px; }
+ .offer-card h3 .strike { text-decoration: line-through; color: #64748b; font-size: 16px; font-weight: 400; margin-left: 8px; }
+ .offer-card .price-tag { color: #6366f1; font-size: 24px; font-weight: 700; float: right; }
+ .offer-card p { font-size: 14px; color: #94a3b8; margin-bottom: 8px; }
+ .offer-card .bullets { font-size: 14px; color: #cbd5e1; margin: 12px 0; line-height: 1.8; }
+ .warning-btn { background: #6366f1; color: #fff; padding: 18px 36px; border-radius: 12px; font-size: 18px; font-weight: 600; border: none; cursor: pointer; width: 100%; margin: 12px 0; }
+ .warning-btn:hover { background: #4f46e5; }
+ .warning-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+ .charge-notice { font-size: 13px; color: #fbbf24; margin: 8px 0; padding: 8px; border: 1px solid #fbbf24; border-radius: 8px; display: inline-block; }
+ .continuity-box { background: #fefce8; color: #422800; border-radius: 12px; padding: 20px; margin: 20px 0; text-align:left; }
+ .continuity-box input { float:right; margin-top:4px; transform: scale(1.4); }
+ .continuity-box h3 { margin: 0 0 8px 0; }
+ .continuity-box p { margin: 0; font-size: 14px; }
+ .continuity-box ul { font-size: 14px; margin-top: 8px; line-height: 1.8; list-style: none; padding: 0; }
+ .continuity-box ul li:before { content: "✅ "; }
+ .coupon-block { text-align:center; margin:24px 0; padding:16px; background:#1e293b; border-radius:12px; }
+ .coupon-block p { color:#94a3b8; font-size:14px; margin-bottom:8px; }
+ .coupon-block input { padding:12px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; font-size:16px; width:200px; }
+ .coupon-block button { padding:12px 24px; border-radius:8px; background:#334155; color:#e2e8f0; border:1px solid #475569; cursor:pointer; font-size:14px; margin-left:8px; }
+ .no-thanks { color: #a0afc0; cursor: pointer; margin-top: 24px; display: inline-block; font-size: 15px; text-decoration: underline; font-weight: 500; }
+ .no-thanks:hover { color: #cbd5e1; }
+ .success-msg { background: #065f46; border-radius: 8px; padding: 12px; color: #6ee7b7; font-size: 14px; margin: 12px 0; display: none; }
+ .error-msg { background: #7f1d1d; border-radius: 8px; padding: 12px; color: #fca5a5; font-size: 14px; margin: 12px 0; display: none; }
+ .continuity-info { font-size: 14px; color: #94a3b8; margin: 12px auto; max-width: 480px; line-height: 1.5; }
+ footer { color: #64748b; font-size: 13px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1e293b; }
+ @media (max-width: 500px) { h1 { font-size: 24px; } }
+ </style>
+</head>
+<body>
+ <div class="container">
+ <div class="check">✅</div>
+ <h1>Payment Successful!</h1>
+ <p class="subtext">Thank you for your purchase. You're one step closer to getting found on AI searches.</p>
+
+ <div id="success-msg" class="success-msg"></div>
+ <div id="error-msg" class="error-msg"></div>
+
+ <hr style="border:none;border-top:1px solid #1e293b;margin:24px 0;">
+
+ <h2 style="font-size:22px;margin-bottom:8px;">⚡ Upgrade Now — Lock In Your Spot</h2>
+ <p style="color:#94a3b8;font-size:15px;margin-bottom:24px;">First to get listed stays listed. Your competitors can't knock you off once AI knows your site.</p>
+
+ <!-- Coupon -->
+ <div class="coupon-block">
+ <p>Enter your coupon code below. The buttons will update to show your discounted price.</p>
+ <input type="text" id="upsell-coupon" placeholder="Coupon code">
+ <button onclick="applyUpsellCoupon()">Apply</button>
+ <p id="upsell-coupon-msg" style="font-size:13px;color:#64748b;margin-top:8px;"></p>
+ </div>
+
+ <!-- Continuity -->
+ <div class="continuity-box">
+ <input type="checkbox" id="continuity">
+ <h3>📈 Monthly AI Growth Membership — Only $19/month</h3>
+ <p><strong>Cheap cost for a great return / opportunity for more sales.</strong></p>
+ <p>Get fresh AI blogs and ready-to-share promotions delivered every month.</p>
+ <ul>
+ <li>Monthly AI-optimized blog post — written and published for you</li>
+ <li>Monthly AI Mention Report — see where you appear across 100+ AI engines</li>
+ <li>Ongoing schema updates if your platform changes</li>
+ <li>Monthly rank check on 5 local keywords</li>
+ </ul>
+ <p style="font-size:13px;margin-top:8px;">Cancel anytime · No contracts · No penalties</p>
+ </div>
+
+ <!-- $49 -->
+ <div class="offer-card">
+ <h3>⚡ Same-Day AI Setup <span class="strike">$297</span><span class="price-tag">$49</span></h3>
+ <p>We install everything same-day. You don't touch code.</p>
+ <div class="bullets">
+ <span>✅ Schema markup — tells AI you're a real business with address, phone, hours</span><br>
+ <span>✅ llms.txt — tells AI which pages matter most</span><br>
+ <span>✅ Robots.txt — opens the door for AI crawlers</span><br>
+ <span>✅ GBP optimization — Google+AI shows your business first</span><br>
+ <span>✅ Top 10 products labeled for AI — AI recommends them directly in answers</span>
+ </div>
+ <div class="charge-notice" id="charge-notice-49">⚠️ Clicking this button will open secure checkout for $49.</div>
+ <button onclick="chargeUpsell(4900,'setup')" class="warning-btn" id="btn-49">⚡ Yes — Set Everything Up for $49</button>
+ </div>
+
+ <!-- $479 -->
+ <div class="offer-card">
+ <h3>🚀 Complete AI Presence <span class="strike">$997</span><span class="price-tag">$479</span></h3>
+ <p>Everything installed, content written, mentions tracked. Full service.</p>
+ <div class="bullets">
+ <span>✅ Everything in the $49 package — installed and live</span><br>
+ <span>✅ 3 AI-optimized blog posts — written, published, and indexed</span><br>
+ <span>✅ AI Mentions Tracker — monitor 100+ keywords across ChatGPT, Claude, Perplexity</span><br>
+ <span>✅ Competitor Analysis — see what your competition is doing (or not)</span><br>
+ <span>✅ 30-Min Strategy Call (optional) — or we send a written recap</span>
+ </div>
+ <div class="charge-notice" id="charge-notice-479">⚠️ Clicking this button will open secure checkout for $479.</div>
+ <button onclick="chargeUpsell(47900,'dfy')" class="warning-btn" id="btn-479">🚀 Yes — Do Everything for $479</button>
+ </div>
+
+ <p class="continuity-info">
+ ☑ Check the box above to add Monthly AI Growth when you purchase either upgrade.<br>
+ The card you entered will be charged $19/month starting today.
+ </p>
+
+ <p onclick="skipAll()" class="no-thanks">No thanks — proceed without upgrades</p>
+
+ <hr style="border:none;border-top:1px solid #1e293b;margin:32px 0;">
+
+ <p style="font-size:12px;color:#475569;text-align:left;">
+ All sales are final. By making a purchase, you acknowledge that your purchase is non-refundable and non-exchangeable. We disclaim responsibility for issues after purchase. This transaction is final upon payment.
+ </p>
+
+ <footer>&copy; 2026 AI Search Readiness</footer>
+ </div>
+
+ <script>
+ let upsellDiscount = 0;
+ let originalSessionId = new URLSearchParams(window.location.search).get('session_id');
+ let tier = 'scan'; // always scan for now
+
+ function applyUpsellCoupon() {
+  const code = document.getElementById('upsell-coupon').value.trim().toUpperCase();
+  const msg = document.getElementById('upsell-coupon-msg');
+
+  if (code === 'EROS') {
+    upsellDiscount = 50;
+    msg.textContent = '✅ EROS applied — 50% off all upgrades!';
+    msg.style.color = '#6ee7b7';
+    document.getElementById('charge-notice-49').textContent = '⚠️ Clicking this button will open secure checkout for $24.50.';
+    document.getElementById('charge-notice-479').textContent = '⚠️ Clicking this button will open secure checkout for $239.50.';
+    document.getElementById('btn-49').textContent = '⚡ Yes — Set Everything Up for $24.50';
+    document.getElementById('btn-479').textContent = '🚀 Yes — Do Everything for $239.50';
+  } else if (code === 'DOHN') {
+    upsellDiscount = 99;
+    msg.textContent = '✅ DOHN applied — everything for $1!';
+    msg.style.color = '#6ee7b7';
+    document.getElementById('charge-notice-49').textContent = '⚠️ Clicking this button will open secure checkout for $1.';
+    document.getElementById('charge-notice-479').textContent = '⚠️ Clicking this button will open secure checkout for $1.';
+    document.getElementById('btn-49').textContent = '⚡ Yes — Set Everything Up for $1';
+    document.getElementById('btn-479').textContent = '🚀 Yes — Do Everything for $1';
+  } else {
+    upsellDiscount = 0;
+    msg.textContent = '❌ Invalid coupon';
+    msg.style.color = '#fca5a5';
+    document.getElementById('charge-notice-49').textContent = '⚠️ Clicking this button will open secure checkout for $49.';
+    document.getElementById('charge-notice-479').textContent = '⚠️ Clicking this button will open secure checkout for $479.';
+    document.getElementById('btn-49').textContent = '⚡ Yes — Set Everything Up for $49';
+    document.getElementById('btn-479').textContent = '🚀 Yes — Do Everything for $479';
+  }
+ }
+
+ async function chargeUpsell(amount, product) {
+  const btn = event.target;
+  const originalText = btn.innerHTML;
+  const finalAmount = upsellDiscount === 99 ? 100 : (upsellDiscount === 50 ? Math.round(amount * 0.5) : amount);
+  const wantContinuity = document.getElementById('continuity').checked;
+
+  btn.innerHTML = 'Opening secure checkout...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: finalAmount,
+        customerEmail: originalSessionId,
+        product: product,
+        tab: 'ai-upsell',
+        coupon: upsellDiscount > 0 ? (upsellDiscount >= 99 ? 'DOHN' : 'EROS') : '',
+        continuity: wantContinuity ? 'true' : '',
+        successRedirect: '/delivery.html?tier=scan&session_id=' + originalSessionId
+      })
+    });
+    const data = await response.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showError('Checkout error. Please try again.');
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+  } catch (err) {
+    showError('Connection error. Please try again.');
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
+ }
+
+ async function createSubscription(sessionId) {
+  try {
+    await fetch('/api/create-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId, priceId: 'price_1TQGnmDiaYrZfCkfJSytJTLE' })
+    });
+  } catch (e) {}
+ }
+
+ function skipAll() {
+  const wantContinuity = document.getElementById('continuity').checked;
+  if (wantContinuity && originalSessionId) {
+    // Create continuity subscription without an upsell
+    createSubscription(originalSessionId);
+  }
+  window.location.href = '/delivery.html?tier=scan&session_id=' + originalSessionId;
+ }
+
+ function showSuccess(msg) {
+  document.getElementById('success-msg').textContent = msg;
+  document.getElementById('success-msg').style.display = 'block';
+  document.getElementById('error-msg').style.display = 'none';
+ }
+
+ function showError(msg) {
+  document.getElementById('error-msg').textContent = msg;
+  document.getElementById('error-msg').style.display = 'block';
+  document.getElementById('success-msg').style.display = 'none';
+ }
+ </script>
+</body>
+</html>

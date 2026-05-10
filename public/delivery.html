@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>What Happens Next — Your AI Readiness Report</title>
+ <style>
+ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; text-align: center; padding: 60px 20px; line-height: 1.6; }
+ .container { max-width: 640px; margin: 0 auto; }
+ .check { font-size: 72px; margin-bottom: 16px; }
+ h1 { font-size: 32px; margin-bottom: 16px; }
+ .subtext { color: #94a3b8; font-size: 16px; margin-bottom: 32px; }
+ .tier-badge { display: inline-block; padding: 8px 20px; border-radius: 100px; font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+ .tier-scan { background: #1e293b; border: 1px solid #475569; color: #94a3b8; }
+ .tier-setup { background: #1e293b; border: 1px solid #6366f1; color: #a5b4fc; }
+ .tier-complete { background: #1e293b; border: 1px solid #f59e0b; color: #fcd34d; }
+ .delivery-block { background: #1e293b; border-radius: 16px; padding: 28px; margin: 24px 0; text-align: left; }
+ .delivery-block h2 { font-size: 20px; margin-bottom: 12px; color: #f1f5f9; }
+ .delivery-block p { font-size: 15px; color: #94a3b8; margin-bottom: 8px; line-height: 1.6; }
+ .step-list { list-style: none; padding: 0; }
+ .step-list li { padding: 12px 0; border-bottom: 1px solid #0f172a; }
+ .step-list li:last-child { border-bottom: none; }
+ .step-num { display: inline-block; background: #6366f1; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 14px; font-weight: 700; margin-right: 12px; }
+ .step-title { font-weight: 600; color: #e2e8f0; font-size: 16px; }
+ .step-desc { font-size: 14px; color: #94a3b8; margin-top: 4px; margin-left: 40px; }
+ .benefit-box { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 4px solid #6366f1; text-align: left; }
+ .benefit-box h3 { font-size: 16px; color: #f1f5f9; margin-bottom: 6px; }
+ .benefit-box p { font-size: 14px; color: #94a3b8; margin: 0; line-height: 1.5; }
+ .cta-section { background: #1e293b; border-radius: 16px; padding: 28px; margin: 32px 0; text-align: center; }
+ .cta-section h2 { font-size: 20px; margin-bottom: 8px; color: #f1f5f9; }
+ .cta-section p { font-size: 14px; color: #94a3b8; margin-bottom: 16px; }
+ footer { color: #64748b; font-size: 13px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1e293b; }
+ @media (max-width: 500px) { h1 { font-size: 24px; } }
+ </style>
+</head>
+<body>
+ <div class="container">
+ <div class="check">✅</div>
+ <h1>You're All Set</h1>
+ 
+ <div id="tier-scan" class="tier-badge tier-scan" style="display:none;">📄 AI Readiness Scan</div>
+ <div id="tier-setup" class="tier-badge tier-setup" style="display:none;">⚡ Same-Day AI Setup</div>
+ <div id="tier-complete" class="tier-badge tier-complete" style="display:none;">🚀 Complete AI Presence</div>
+
+ <p class="subtext" id="delivery-subtext">Here's exactly what happens next and what you can expect.</p>
+
+ <!-- Scan tier -->
+ <div id="scan-content">
+ <div class="delivery-block">
+  <h2>Your AI Readiness Report</h2>
+  <p>We're preparing your personalized 6-category scan. Here's the step-by-step delivery:</p>
+  <ul class="step-list">
+   <li>
+    <span class="step-num">1</span>
+    <span class="step-title">Report Generated</span>
+    <div class="step-desc">Within minutes, our system scans your website across all 6 categories. You'll receive a score out of 100 with specific issues identified.</div>
+   </li>
+   <li>
+    <span class="step-num">2</span>
+    <span class="step-title">Emailed to You</span>
+    <div class="step-desc">The full report arrives in your inbox from angela@ebiresults.com. It includes your score, failing categories, and step-by-step fixes.</div>
+   </li>
+   <li>
+    <span class="step-num">3</span>
+    <span class="step-title">Fix It or We Fix It</span>
+    <div class="step-desc">Each issue comes with a DIY guide. Or upgrade to $49 Same-Day Setup and we do it all for you.</div>
+   </li>
+  </ul>
+ </div>
+ </div>
+
+ <!-- Setup tier -->
+ <div id="setup-content" style="display:none;">
+ <div class="delivery-block">
+  <h2>Your Same-Day AI Setup</h2>
+  <p>You chose the $49 package. Here's your delivery timeline:</p>
+  <ul class="step-list">
+   <li>
+    <span class="step-num">1</span>
+    <span class="step-title">We Email You for Access</span>
+    <div class="step-desc">Within 24 hours, you'll get an email asking for your website login credentials. Reply with a temporary password.</div>
+   </li>
+   <li>
+    <span class="step-num">2</span>
+    <span class="step-title">Same-Day Installation</span>
+    <div class="step-desc">We install schema markup, llms.txt, robots.txt, GBP optimization, and top 10 product labeling. Usually done within 4 hours.</div>
+   </li>
+   <li>
+    <span class="step-num">3</span>
+    <span class="step-title">Confirmation + Next Steps</span>
+    <div class="step-desc">Done-done checklist with screenshots of everything installed plus your new AI visibility score.</div>
+   </li>
+  </ul>
+ </div>
+ </div>
+
+ <!-- Complete tier -->
+ <div id="complete-content" style="display:none;">
+ <div class="delivery-block">
+  <h2>Your Complete AI Presence</h2>
+  <p>You invested in the full package. Here's everything coming your way:</p>
+  <ul class="step-list">
+   <li>
+    <span class="step-num">1</span>
+    <span class="step-title">Same-Day Installation</span>
+    <div class="step-desc">We log in and install all AI visibility upgrades — schema, llms.txt, robots.txt, GBP, product labeling.</div>
+   </li>
+   <li>
+    <span class="step-num">2</span>
+    <span class="step-title">Content That Answers Questions</span>
+    <div class="step-desc">3 AI-optimized blog posts that answer what your customers are asking AI right now — so AI serves your site as the answer.</div>
+   </li>
+   <li>
+    <span class="step-num">3</span>
+    <span class="step-title">AI Mentions Tracking Starts</span>
+    <div class="step-desc">Monitor 100+ keywords across ChatGPT, Claude, Perplexity, and Google AI. See where you appear and where competitors gain.</div>
+   </li>
+   <li>
+    <span class="step-num">4</span>
+    <span class="step-title">Strategy Call (Optional)</span>
+    <div class="step-desc">30-minute call to review results, or we send a written recap with recommendations.</div>
+   </li>
+  </ul>
+ </div>
+ </div>
+
+ <!-- Continuity badge -->
+ <div id="continuity-badge" style="display:none;">
+ <div class="benefit-box">
+  <h3>📈 AI Continuity — Active</h3>
+  <p>Your $19/month plan is live. First monthly AI-optimized blog post + AI Mention Report within 7 days. Fresh content every month keeps you climbing while competitors fall behind.</p>
+ </div>
+ </div>
+
+ <!-- What it means -->
+ <div class="benefit-box">
+  <h3>💡 What This Means for Your Business</h3>
+  <p id="benefit-text">Most businesses are invisible to AI search right now. By taking action today, you're ahead of 95% of your competition. AI search is growing 10x faster than traditional search — the businesses that get found now will be the ones that survive.</p>
+ </div>
+
+ <div class="benefit-box">
+  <h3>📊 How to Get More Sales</h3>
+  <p>Each fix makes your site more findable. When a customer asks AI "best plumber near me," your site needs to be the only answer. That's what this system does. More visibility = more calls = more sales.</p>
+ </div>
+
+ <!-- Referral CTA -->
+ <div class="cta-section">
+  <h2>Your Competition Is Already Doing This</h2>
+  <p style="font-size:15px;color:#f1f5f9;margin-bottom:12px;">Every business that gets visible to AI search first becomes the only answer customers hear. The ones who wait? They become invisible — fast.</p>
+  <p>Know a business running blind to AI? <strong><a href="https://ai-readiness-funnel-production.up.railway.app/" style="color:#6366f1;">Send them here before their competition does.</a></strong></p>
+  <p style="font-size:13px;margin-top:12px;">Every day they wait, someone else takes their spot at the top of AI answers.</p>
+ </div>
+
+ <footer>
+  Questions? Reply to the email from angela@ebiresults.com<br>
+  &copy; 2026 AI Search Readiness
+ </footer>
+ </div>
+
+ <script>
+ const params = new URLSearchParams(window.location.search);
+ const tier = params.get('tier') || 'scan';
+
+ document.getElementById('tier-' + tier).style.display = 'inline-block';
+ document.getElementById(tier + '-content').style.display = 'block';
+
+ if (tier === 'scan') {
+  document.getElementById('delivery-subtext').textContent = "You chose the AI Readiness Scan. Your report is on its way.";
+  document.getElementById('benefit-text').textContent = "Even with just the scan, you now know exactly what's broken. Most business owners never get this far. The data alone gives you an edge — fix the issues and you'll start appearing where customers are searching.";
+ } else if (tier === 'setup') {
+  document.getElementById('delivery-subtext').textContent = "You chose Same-Day AI Setup. We're installing everything now.";
+  document.getElementById('benefit-text').textContent = "Schema markup alone makes you 3x more likely to appear in AI answers. Combined with llms.txt and GBP optimization, your business becomes the obvious choice when AI recommends a provider.";
+ } else if (tier === 'complete') {
+  document.getElementById('delivery-subtext').textContent = "You chose the Complete Package. Everything is in motion.";
+  document.getElementById('benefit-text').textContent = "This is the full system. Blog posts that answer customer questions = AI serves your site as THE answer. Mentions tracking = you see exactly where you're winning. You're not just visible — you're dominant.";
+ }
+
+ const sessionId = params.get('session_id');
+ if (sessionId && tier !== 'scan') {
+  document.getElementById('continuity-badge').style.display = 'block';
+ }
+ </script>
+</body>
+</html>

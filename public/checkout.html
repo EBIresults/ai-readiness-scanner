@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Search Readiness — Get Found on AI</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#0f172a; color:#e2e8f0; line-height:1.6; }
+.container { max-width:780px; margin:0 auto; padding:40px 20px; }
+
+h1 { font-size:36px; color:#f8fafc; text-align:center; margin-bottom:8px; line-height:1.2; }
+.subtitle { color:#94a3b8; font-size:18px; text-align:center; margin-bottom:32px; }
+
+.story-box { background:#1e293b; border-radius:16px; padding:28px; margin-bottom:24px; border-left:4px solid #f59e0b; }
+.story-box p { color:#cbd5e1; margin-bottom:12px; font-size:15px; }
+.story-box p:last-child { margin-bottom:0; }
+.story-box strong { color:#f8fafc; }
+.story-highlight { background:linear-gradient(135deg,#1e1b4b,#0f172a); border:2px solid #6366f1; border-radius:14px; padding:20px; margin:24px 0; text-align:center; }
+.story-highlight p { font-size:16px; color:#e2e8f0; margin:4px 0; }
+.story-highlight .big-num { font-size:48px; font-weight:800; color:#f59e0b; }
+
+.categories { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:24px 0; }
+.cat-item { background:#1e293b; border-radius:12px; padding:14px 16px; border:1px solid #334155; display:flex; align-items:center; gap:10px; }
+.cat-item .icon { font-size:20px; }
+.cat-item .label { font-size:13px; color:#94a3b8; }
+.cat-item .label strong { display:block; color:#e2e8f0; font-size:14px; margin-bottom:2px; }
+
+.capture-form { background:#1e293b; border-radius:16px; padding:28px; margin-bottom:24px; border:1px solid #334155; }
+.capture-form h2 { font-size:18px; color:#f8fafc; margin-bottom:16px; text-align:center; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-grid .full { grid-column:1 / -1; }
+.capture-form input, .capture-form select { width:100%; padding:12px 16px; border-radius:10px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; font-size:15px; }
+.capture-form input::placeholder { color:#475569; }
+.capture-form label { display:block; font-size:12px; color:#94a3b8; margin-bottom:4px; }
+
+.coupon-section { background:#1e293b; border-radius:12px; padding:16px; margin:20px 0; border:1px solid #334155; }
+.coupon-section h3 { font-size:14px; color:#94a3b8; margin-bottom:8px; }
+.coupon-row { display:flex; gap:8px; }
+.coupon-row input { flex:1; padding:10px 14px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; font-size:14px; }
+.coupon-row button { padding:10px 20px; border-radius:8px; border:none; background:#334155; color:#e2e8f0; font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap; }
+.coupon-row button.applied { background:#22c55e; color:#0f172a; }
+.coupon-msg { font-size:12px; color:#64748b; margin-top:6px; text-align:center; }
+
+.price-box { text-align:center; margin:24px 0; }
+.price-box .was { color:#64748b; font-size:16px; text-decoration:line-through; }
+.price-box .now { font-size:42px; font-weight:800; color:#22c55e; margin:4px 0; }
+.price-box .now small { font-size:18px; color:#64748b; font-weight:400; }
+.price-box .bnpl { color:#64748b; font-size:14px; margin-top:4px; }
+.price-box .bnpl strong { color:#f59e0b; }
+
+.checkout-btn { width:100%; padding:20px; border:none; border-radius:14px; font-size:20px; font-weight:700; cursor:pointer; transition:all .2s; background:#22c55e; color:#0f172a; margin-bottom:20px; }
+.checkout-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(34,197,94,0.3); }
+.checkout-btn:disabled { background:#334155; color:#64748b; cursor:not-allowed; transform:none; box-shadow:none; }
+
+.faq { margin:40px 0; }
+.faq h2 { font-size:20px; text-align:center; margin-bottom:20px; }
+.faq-item { background:#1e293b; border:1px solid #334155; border-radius:12px; margin-bottom:10px; padding:16px 20px; cursor:pointer; }
+.faq-item .q { font-weight:600; color:#f8fafc; display:flex; justify-content:space-between; }
+.faq-item .a { color:#94a3b8; font-size:14px; margin-top:10px; display:none; }
+.faq-item.open .a { display:block; }
+.faq-item .arrow { transition:transform .2s; }
+.faq-item.open .arrow { transform:rotate(180deg); }
+
+.micro-box { background:#1e293b; border-radius:12px; padding:16px; margin:12px 0; border:1px solid #334155; }
+.micro-box p { color:#94a3b8; font-size:13px; text-align:center; }
+
+footer { text-align:center; color:#475569; font-size:13px; margin-top:32px; padding-top:16px; border-top:1px solid #1e293b; }
+footer a { color:#6366f1; }
+
+@media (max-width:640px) {
+  h1 { font-size:26px; }
+  .categories { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>📡 AI Search Readiness</h1>
+  <p class="subtitle"><strong>Your Business Is Invisible to AI Search</strong></p>
+
+  <!-- Mike the Plumber Story -->
+  <div class="story-box">
+    <p>93 million white-collar workers will be displaced by AI. The businesses that <strong>get found on AI searches</strong> will replace them. Is yours one of them?</p>
+    <p>Mike the plumber runs a 3-man shop in Nashville. Been in business 14 years. Great reviews. Steady work.</p>
+    <p>One day his phone stops ringing. Not slowly — completely. His wife googles "emergency plumber Nashville" and Mike doesn't show up. Not page 1. Not page 2. Not anywhere.</p>
+    <p>A competitor — younger guy, cheaper van — had optimized for Google Business Profile and keyword content. Mike didn't know that was a thing you had to do.</p>
+    <p><strong>AI search is ten times faster than that.</strong></p>
+    <p>AI doesn't browse 10 results and compare. It reads <em>one site</em> — the most understandable one — and delivers that as the answer. If your website isn't structured for AI to read, <strong>you don't exist.</strong></p>
+  </div>
+
+  <!-- Stats -->
+  <div class="story-highlight">
+    <div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div class="big-num">35</div>
+        <p>One local store's score</p>
+      </div>
+      <div>
+        <div class="big-num">5/6</div>
+        <p>Categories failing or missing</p>
+      </div>
+      <div>
+        <div class="big-num">&lt;60</div>
+        <p>Minutes to fix the top 3 issues</p>
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:14px;color:#94a3b8;">Most businesses score under 40. The fix takes less than an hour.</p>
+  </div>
+
+  <!-- 6 Categories -->
+  <p style="font-size:18px;font-weight:700;margin-bottom:12px;">Your scan checks <span style="color:#22c55e;">6 categories</span>:</p>
+  <div class="categories">
+    <div class="cat-item"><span class="icon">🤖</span><div class="label"><strong>AI Crawlability</strong>Can AI bots read your site at all?</div></div>
+    <div class="cat-item"><span class="icon">🏷️</span><div class="label"><strong>Schema Markup</strong>Does AI know you're a real business?</div></div>
+    <div class="cat-item"><span class="icon">📍</span><div class="label"><strong>Google Business Profile</strong>Complete and verified?</div></div>
+    <div class="cat-item"><span class="icon">✍️</span><div class="label"><strong>Content for AI</strong>Does your copy answer customer questions?</div></div>
+    <div class="cat-item"><span class="icon">📄</span><div class="label"><strong>llms.txt Priority</strong>Have you told AI which pages matter?</div></div>
+    <div class="cat-item"><span class="icon">🔗</span><div class="label"><strong>Citation Consistency</strong>NAP matches everywhere?</div></div>
+  </div>
+
+  <!-- Capture Form -->
+  <div class="capture-form">
+    <h2>Get Your Free Report & AI Readiness Score</h2>
+    <p style="text-align:center;color:#94a3b8;font-size:13px;margin-bottom:16px;">Enter your info below. Your personalized report will be emailed to you instantly after purchase.</p>
+    <div class="form-grid">
+      <div class="full"><input type="text" id="name" placeholder="Full Name *" required></div>
+      <div><input type="email" id="email" placeholder="Email *" required></div>
+      <div><input type="tel" id="phone" placeholder="Phone Number"></div>
+      <div><input type="text" id="website" placeholder="Your Website URL"></div>
+      <div><input type="text" id="city" placeholder="City"></div>
+      <div><input type="text" id="state" placeholder="State"></div>
+    </div>
+  </div>
+
+  <!-- Coupon -->
+  <div class="coupon-section">
+    <h3>💳 Have a coupon code?</h3>
+    <div class="coupon-row">
+      <input type="text" id="coupon-input" placeholder="Enter coupon code">
+      <button id="apply-coupon">Apply</button>
+    </div>
+    <div class="coupon-msg" id="coupon-msg">Enter a valid coupon code if you have one.</div>
+  </div>
+
+  <!-- Price -->
+  <div class="price-box">
+    <div class="was">Normally $27</div>
+    <div class="now" id="order-total">$7 <small>one-time</small></div>
+    <div class="bnpl" id="bnpl-row">or 4 payments of <strong id="bnpl-amount">$1.75</strong> with Affirm &bull; Klarna &bull; Pay in 4</div>
+  </div>
+
+  <!-- Button -->
+  <button id="checkout-button" class="checkout-btn">🔍 Run My AI Readiness Scan</button>
+
+  <div class="micro-box">
+    <p>No subscription &bull; One-time payment &bull; Instant report</p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <h2>❓ Questions?</h2>
+
+    <div class="faq-item">
+      <div class="q"><span>Is this just a report, or are you going to try to sell me something?</span><span class="arrow">▼</span></div>
+      <div class="a">This is a $7 AI Readiness Scan. You get a full report showing your score across 6 categories with specific fixes. There is a $49 setup offer at the end if you want done-for-you installation — but the report itself is complete and valuable on its own.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q"><span>What happens after I pay $7?</span><span class="arrow">▼</span></div>
+      <div class="a">You get your personalized AI Readiness Report emailed to you instantly. It shows your score out of 100, exactly what's broken in each category, and step-by-step fix instructions. Most fixes take under an hour.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q"><span>What if I can't edit my website myself?</span><span class="arrow">▼</span></div>
+      <div class="a">The report includes copy-paste code ready to hand to your web developer. Or you can upgrade to the $49 Same-Day Setup where we install everything for you.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q"><span>Can this break my site?</span><span class="arrow">▼</span></div>
+      <div class="a">No. The scan is read-only. We check your public website — we don't modify anything. The schema code we provide is safe to paste and we include rollback instructions.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q"><span>What if I'm not on WordPress?</span><span class="arrow">▼</span></div>
+      <div class="a">Doesn't matter. The scan works on any website — WordPress, Shopify, Wix, Squarespace, custom HTML. You get schema code and instructions for any platform.</div>
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <div class="story-highlight" style="border-color:#22c55e;">
+    <p style="font-size:18px;font-weight:700;">Your customers are asking AI where to go right now.</p>
+    <p style="font-size:15px;color:#94a3b8;margin-top:4px;"><strong style="color:#22c55e;">Be the answer.</strong></p>
+  </div>
+
+  <div class="micro-box">
+    <p>Secure checkout &bull; Powered by Stripe &bull; Cancel anytime</p>
+  </div>
+
+  <footer>
+    <p>All sales are final. Your AI Readiness Report is delivered instantly after payment.</p>
+    <p>— <strong>Angela</strong> with EBI Results</p>
+    <p>📞 508-797-2461</p>
+    <p><strong>Text your Name, Email, Website &amp; Phone to 508-797-2461</strong></p>
+    <p style="font-style:italic;">Questions are answered in the order they are received</p>
+    <p>🌐 <a href="https://agent.ebiresults.com"><strong>agent.ebiresults.com</strong></a></p>
+  </footer>
+</div>
+
+<script>
+const stripe = Stripe('pk_live_51SCimtDiaYrZfCkfM6UQkvxddqPsGh0G3hwJS3aAFkoWBIwV6nnoXJk0egfGnvW1lvt8vIJSXbdpnuu8yj5xkZkD002tstT5bN');
+
+let selectedAmount = 700;
+let appliedCoupon = null;
+let discountMultiplier = 1.0;
+const BASE_AMOUNT = 700;
+
+// Coupon
+document.getElementById('apply-coupon').addEventListener('click', function() {
+  const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+  let msg = document.getElementById('coupon-msg');
+
+  if (code === 'EROS') {
+    discountMultiplier = 0.5;
+    appliedCoupon = 'EROS';
+    this.textContent = 'Applied ✅';
+    this.classList.add('applied');
+    msg.innerHTML = '🎉 Coupon applied — 50% off!';
+  } else if (code === 'DOHN') {
+    discountMultiplier = 0.07 / 7;
+    appliedCoupon = 'DOHN';
+    this.textContent = 'Applied ✅';
+    this.classList.add('applied');
+    msg.innerHTML = '🎉 Coupon applied!';
+  } else if (code) {
+    msg.innerHTML = '❌ Invalid coupon code. Please try again.';
+    return;
+  }
+  document.getElementById('coupon-input').value = code;
+  updateSummary();
+});
+
+function updateSummary() {
+  const discounted = Math.round(BASE_AMOUNT * discountMultiplier);
+  const display = discounted >= 100 ? `$${(discounted/100).toFixed(0)}` : `$${(discounted/100).toFixed(2)}`;
+  document.getElementById('order-total').innerHTML = display + ' <small>one-time</small>';
+  const bnpl = (discounted / 100 / 4).toFixed(2);
+  document.getElementById('bnpl-amount').textContent = '$' + bnpl;
+}
+
+// Checkout
+document.getElementById('checkout-button').addEventListener('click', async function() {
+  const btn = this;
+  btn.innerHTML = 'Opening secure checkout...';
+  btn.disabled = true;
+
+  try {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (!name || !email) {
+      alert('Please enter your name and email.');
+      btn.innerHTML = '🔍 Run My AI Readiness Scan';
+      btn.disabled = false;
+      return;
+    }
+
+    // Capture lead
+    await fetch('/api/capture-lead', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'x-vercel-protection-bypass':'VtylS6ilJxulncXsIsuLivtdlmbVPF4d'},
+      body: JSON.stringify({
+        name, email,
+        phone: document.getElementById('phone').value,
+        website: document.getElementById('website').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        coupon: appliedCoupon
+      })
+    });
+
+    const finalAmount = Math.round(BASE_AMOUNT * discountMultiplier);
+
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'x-vercel-protection-bypass':'VtylS6ilJxulncXsIsuLivtdlmbVPF4d'},
+      body: JSON.stringify({
+        amount: finalAmount,
+        customerEmail: email,
+        product: 'ai-readiness',
+        tab: 'ai',
+        coupon: appliedCoupon
+      })
+    });
+    const session = await res.json();
+    if (session.url) {
+      window.location.href = session.url;
+    } else {
+      alert('Checkout error: ' + (session.error || 'Unknown'));
+      btn.innerHTML = '🔍 Run My AI Readiness Scan';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    alert('Connection error. Please try again.');
+    btn.innerHTML = '🔍 Run My AI Readiness Scan';
+    btn.disabled = false;
+  }
+});
+
+// FAQ toggles
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', function() {
+    this.classList.toggle('open');
+  });
+});
+
+updateSummary();
+</script>
+</body>
+</html>

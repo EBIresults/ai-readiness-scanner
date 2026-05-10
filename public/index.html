@@ -1,501 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EBI Results — Evidence-Based Improvement</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#0f172a; color:#e2e8f0; line-height:1.6; }
-.container { max-width:900px; margin:0 auto; padding:40px 20px; }
-
-/* ── Nav ── */
-nav { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; background:#1e293b; border-bottom:1px solid #334155; position:sticky; top:0; z-index:100; }
-nav .logo { font-size:20px; font-weight:800; color:#f8fafc; }
-nav .logo span { color:#22c55e; }
-nav a { color:#94a3b8; text-decoration:none; font-size:14px; margin-left:20px; transition:color .2s; }
-nav a:hover { color:#f8fafc; }
-
-/* ── Hero ── */
-.hero { text-align:center; padding:60px 20px 40px; }
-.hero h1 { font-size:42px; color:#f8fafc; margin-bottom:8px; }
-.hero h1 span { color:#22c55e; }
-.hero .tagline { font-size:18px; color:#94a3b8; margin-bottom:6px; }
-.hero .sub { font-size:15px; color:#64748b; max-width:650px; margin:0 auto 24px; }
-
-/* ── Badges ── */
-.badges { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:32px; }
-.badges .badge { background:#1e293b; border:1px solid #334155; border-radius:10px; padding:10px 18px; font-size:13px; display:flex; align-items:center; gap:8px; color:#94a3b8; }
-
-/* ── About ── */
-.about { background:#1e293b; border-radius:16px; padding:32px; margin-bottom:32px; border:1px solid #334155; }
-.about h2 { font-size:24px; color:#f8fafc; margin-bottom:16px; }
-.about p { color:#cbd5e1; margin-bottom:12px; font-size:15px; }
-.about .highlight { background:linear-gradient(135deg,#1e1b4b,#0f172a); border-left:4px solid #f59e0b; padding:16px 20px; border-radius:0 12px 12px 0; margin:20px 0; }
-.about .highlight strong { color:#f59e0b; }
-
-/* ── Scan Section ── */
-.scan-section { background:#1e293b; border-radius:16px; padding:32px; margin-bottom:32px; border:2px solid #6366f1; }
-.scan-section h2 { font-size:24px; color:#f8fafc; text-align:center; margin-bottom:6px; }
-.scan-section .scan-sub { color:#94a3b8; text-align:center; font-size:14px; margin-bottom:24px; }
-.scan-form { max-width:500px; margin:0 auto; }
-.scan-form .field { margin-bottom:14px; }
-.scan-form label { display:block; font-size:12px; color:#94a3b8; margin-bottom:4px; font-weight:600; }
-.scan-form input { width:100%; padding:12px 16px; border-radius:10px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; font-size:15px; outline:none; transition:border .2s; }
-.scan-form input:focus { border-color:#6366f1; }
-.scan-form input::placeholder { color:#475569; }
-.scan-btn { width:100%; padding:16px; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; transition:all .2s; background:#6366f1; color:#fff; margin-top:8px; }
-.scan-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(99,102,241,0.3); }
-.scan-btn:disabled { background:#334155; color:#64748b; cursor:not-allowed; transform:none; }
-
-/* ── How It Works ── */
-.how { margin:40px 0; }
-.how h2 { text-align:center; font-size:22px; margin-bottom:24px; }
-.steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
-.step { background:#1e293b; border-radius:12px; padding:20px; text-align:center; border:1px solid #334155; }
-.step .icon-wrap { width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg,#6366f1,#22c55e); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:20px; }
-.step h3 { font-size:15px; color:#f8fafc; margin-bottom:6px; }
-.step p { font-size:13px; color:#64748b; }
-
-/* ── 3-Tier Pricing ── */
-.pricing { margin:40px 0; }
-.pricing h2 { text-align:center; font-size:22px; margin-bottom:6px; }
-.pricing .pricing-sub { text-align:center; color:#94a3b8; font-size:14px; margin-bottom:24px; }
-.tiers { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
-.tier { background:#1e293b; border-radius:16px; padding:28px 20px; border:1px solid #334155; text-align:center; position:relative; }
-.tier.featured { border-color:#f59e0b; border-width:2px; }
-.tier.featured .ribbon { position:absolute; top:-1px; right:20px; background:#f59e0b; color:#0f172a; font-size:11px; font-weight:700; padding:4px 12px; border-radius:0 0 8px 8px; }
-.tier h3 { font-size:16px; color:#f8fafc; margin-bottom:4px; }
-.tier .price { font-size:28px; font-weight:800; color:#22c55e; margin:8px 0; }
-.tier .price sub { font-size:14px; color:#64748b; font-weight:400; }
-.tier ul { list-style:none; padding:0; margin:16px 0; text-align:left; }
-.tier ul li { padding:8px 0; border-bottom:1px solid #1e293b; font-size:13px; color:#cbd5e1; display:flex; align-items:center; gap:8px; }
-.tier ul li:last-child { border:none; }
-.tier ul li .check { color:#22c55e; font-weight:700; }
-.tier .cta { width:100%; padding:12px; border:none; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; transition:all .2s; margin-top:8px; }
-.tier .cta.primary { background:#22c55e; color:#0f172a; }
-.tier .cta.secondary { background:#6366f1; color:#fff; }
-.tier .cta.outline { background:transparent; border:2px solid #334155; color:#94a3b8; }
-.tier .cta:hover { transform:translateY(-2px); }
-
-/* ── Testimonials ── */
-.testimonials { margin:40px 0; }
-.testimonials h2 { text-align:center; font-size:22px; margin-bottom:24px; }
-.testimonial-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.testimonial { background:#1e293b; border-radius:12px; padding:20px; border:1px solid #334155; }
-.testimonial .stars { color:#f59e0b; font-size:14px; margin-bottom:8px; }
-.testimonial p { font-size:13px; color:#94a3b8; margin-bottom:8px; font-style:italic; }
-.testimonial .author { font-size:12px; color:#64748b; font-weight:600; }
-
-/* ── Map / Regions ── */
-.regions { margin:40px 0; }
-.regions h2 { text-align:center; font-size:22px; margin-bottom:20px; }
-.region-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.region-card { background:#1e293b; border-radius:12px; padding:16px; border:1px solid #334155; display:flex; align-items:center; gap:12px; }
-.region-card .icon { font-size:24px; }
-.region-card h3 { font-size:14px; color:#f8fafc; margin-bottom:2px; }
-.region-card p { font-size:12px; color:#64748b; }
-
-/* ── CTA ── */
-.cta-section { background:linear-gradient(135deg,#1e1b4b,#0f172a); border:2px solid #6366f1; border-radius:16px; padding:40px; text-align:center; margin:40px 0; }
-.cta-section h2 { font-size:26px; color:#f8fafc; margin-bottom:8px; }
-.cta-section p { color:#94a3b8; font-size:15px; margin-bottom:20px; }
-.cta-section .big-btn { display:inline-block; background:#22c55e; color:#0f172a; font-size:18px; font-weight:800; padding:16px 40px; border-radius:12px; text-decoration:none; transition:all .2s; }
-.cta-section .big-btn:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(34,197,94,0.4); }
-
-/* ── Footer ── */
-footer { text-align:center; color:#475569; font-size:13px; padding:24px 20px; border-top:1px solid #1e293b; }
-footer a { color:#6366f1; text-decoration:none; }
-footer .social { display:flex; justify-content:center; gap:16px; margin-bottom:12px; }
-footer .social a { width:36px; height:36px; border-radius:50%; background:#1e293b; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:16px; transition:all .2s; }
-footer .social a:hover { background:#6366f1; color:#fff; }
-
-/* ── Responsive ── */
-@media (max-width:768px) {
-  .tiers { grid-template-columns:1fr; }
-  .steps { grid-template-columns:1fr; }
-  .testimonial-grid { grid-template-columns:1fr; }
-  .region-grid { grid-template-columns:1fr; }
-  .hero h1 { font-size:30px; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EBI Results — FREE AI Agent Automation Workshops. Learn OpenClaw, InstantlyClaw & MarketingSecrets.AI. No experience required.">
+  <title>EBI Results — AI Automation Workshops & Website AI Evaluation</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Georgia,serif;background:#f8f7f4;color:#2c3e2d;line-height:1.7}
+    .container{max-width:800px;margin:0 auto;padding:40px 24px}
+    h1{font-size:36px;font-weight:400;color:#3a5a3a;letter-spacing:-0.5px}
+    h2{font-size:24px;font-weight:400;color:#3a5a3a;margin:36px 0 12px}
+    h3{font-size:18px;font-weight:600;color:#3a5a3a;margin:20px 0 8px}
+    p{font-size:16px;color:#4a5a4a;margin:0 0 16px}
+    .sub{color:#8b9d8b;font-size:14px;text-transform:uppercase;letter-spacing:2px;margin:0 0 8px}
+    hr{border:none;border-top:1px solid #d4ddd4;margin:32px 0}
+    .card{background:#f0ede8;border:1px solid #d4ddd4;border-radius:6px;padding:20px;margin:16px 0}
+    .card h3{font-size:18px;color:#3a5a3a;margin:0 0 8px}
+    .card p{font-size:14px;color:#5a7a5a;margin:0}
+    .card strong{color:#3a5a3a}
+    .offer-box{background:#e8f0e8;border:2px solid #3a5a3a;border-radius:8px;padding:24px;margin:24px 0}
+    .offer-box h3{font-size:20px;color:#3a5a3a;margin-bottom:8px}
+    .offer-box .price{font-size:14px;color:#5a7a5a}
+    .offer-box ul{margin:12px 0;padding-left:20px;font-size:14px;color:#4a5a4a;line-height:1.8}
+    .cta-btn{display:inline-block;background:#3a5a3a;color:#fff;padding:14px 32px;border-radius:6px;font-size:16px;font-weight:600;text-decoration:none;margin:12px 0}
+    .cta-btn:hover{background:#4a7a4a}
+    .testimonial{border-left:3px solid #b87333;padding:16px 20px;margin:16px 0;background:#f0ede8;border-radius:0 6px 6px 0}
+    .testimonial p{font-size:15px;font-style:italic;margin-bottom:4px;color:#5a7a5a}
+    .testimonial .author{font-size:13px;color:#8b9d8b;font-style:normal}
+    a{color:#b87333;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .footer{margin-top:48px;padding-top:24px;border-top:1px solid #d4ddd4;text-align:center;font-size:13px;color:#8b9d8b}
+    .footer p{margin:2px 0;font-size:13px;color:#8b9d8b}
+    @media(max-width:500px){h1{font-size:28px}h2{font-size:20px}}
+  </style>
 </head>
 <body>
+  <div class="container">
+    <p class="sub">EBI Results</p>
+    <h1>AI Automation Workshops<br>That Grow Your Business</h1>
+    <p style="font-size:18px;color:#5a7a5a;margin:16px 0 32px;">Learn OpenClaw, InstantlyClaw & MarketingSecrets.AI. No experience required. Just a computer.</p>
 
-<!-- Nav -->
-<nav>
-  <div class="logo"><span style="color:#22c55e;">Outside</span> WITH Renée</div>
-  <div>
-    <a href="#about">About</a>
-    <a href="#scan">Free Scan</a>
-    <a href="#pricing">Services</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+    <!-- TWO OFFERS -->
+    <h2>Two Offers</h2>
 
-<div class="container">
-
-  <!-- Hero -->
-  <div class="hero" id="hero">
-    <h1>Outside <span>WITH Renée</span></h1>
-    <p class="tagline">Improving HEALTH, WEALTH and creating CONTINUITY PLANS using EBI Results.</p>
-    <p class="sub">Your idea. Making money in your wallet. Don't be intimidated. All you need is an idea and a PayPal/Venmo/Stripe account — I do the rest.</p>
-    <div class="badges">
-      <span class="badge"><i class="fas fa-check-circle" style="color:#22c55e;"></i> Revenue-backed marketing</span>
-      <span class="badge"><i class="fas fa-check-circle" style="color:#22c55e;"></i> Root-cause health solutions</span>
-      <span class="badge"><i class="fas fa-check-circle" style="color:#22c55e;"></i> Continuity plans that pay beyond retirement</span>
+    <div class="offer-box">
+      <h3>BUSINESS OWNERS: Get Your Free Website Evaluation To See If You Are Found On AI Searches</h3>
+      <p class="price">CHEAP fix with explosive results.</p>
+      <p style="font-size:13px;color:#8b9d8b;font-style:italic;">*Available only when registering for workshop below</p>
+      <p><strong>What this is:</strong> We scan your website and tell you exactly why AI search engines (ChatGPT, Siri, Google AI Overviews) are NOT showing your business. Then we show you the CHEAP fix that gets you found.</p>
+      <a href="https://ai-readiness-scanner-red.vercel.app/checkout.html" class="cta-btn">Get Your Free Website Evaluation</a>
     </div>
 
-    <!-- CTA Button (no video - video is on bonus page) -->
-    <div style="margin:32px auto;max-width:500px;text-align:center;">
-      <a href="https://bonusmarketingoffer.ebiresults.com" style="display:inline-block;background:#6366f1;color:#fff;padding:14px 32px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px;">🎁 Collect Your Bonus HERE</a>
-      <p style="margin-top:12px;">
-        <a href="https://calendly.com/getatrust/ebi-results-call" style="display:inline-block;background:#22c55e;color:#0f172a;padding:14px 32px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px;">📅 Get Your Marketing Machine TODAY</a>
-      </p>
-      <p style="color:#64748b;font-size:12px;margin-top:8px;">Schedule a call. It's FREE! What do you have to lose?</p>
+    <div class="offer-box" style="background:#f0ede8;border-color:#b87333;">
+      <h3>WHITE COLLAR WORKERS: You are about to be replaced by these AI Agents. BUT don't worry.</h3>
+      <p>EVERY BUSINESS will need someone who knows how to use these tools — so when you get laid off YOU WILL INSTANTLY GET HIRED by a business that needs to add these tools and doesn't have time to learn them. SO THEY HIRE YOU.</p>
+      <p><strong>93 Million</strong> of you white collar earners will be replaced by AI really soon. Check out how this platform works and you'll see exactly why…! It's nuts.</p>
+      <a href="#workshop-form" class="cta-btn" style="background:#b87333;">SIGN UP HERE FOR THE FREE NEW SKILLS WORKSHOP</a>
+      <p style="font-size:14px;font-weight:600;margin-top:12px;">AND GET YOUR WEBSITE AI EVALUATION — ALSO FREE</p>
     </div>
-  </div>
 
-  <!-- About / Mission -->
-  <div class="about" id="about">
-    <h2>EBI Results — Evidence-Based <span style="color:#22c55e;">Improvement</span></h2>
-    <p>For over a decade, I've worked hand in hand with over-scheduled CEOs and business owners to multiply their existing customer-base and grow referral networks that bring customers who are excited to buy — while sneaking in those proven health hacks needed to keep them going, that they don't have time to research and test.</p>
+    <hr>
+
+    <!-- About -->
+    <h2>Connect Any Skills You Already Have</h2>
+    <p>Expert AI Workshops on InstantlyClaw, OpenClaw + MarketingSecrets.AI</p>
+    <p>Empowering Learners: Start Your Journey with No Experience Required</p>
+
+    <!-- Testimonials -->
+    <h2>Testimonials</h2>
     
-    <p><strong style="color:#f8fafc;">EBI Results provides proven SHORTCUTS</strong> to help those who are struggling to IMPROVE their health, looking to FIRE their boss, or working to BUILD generational wealth — to create CONTINUITY PLANS that pay you beyond your golden years, without being tied to the office.</p>
-
-    <div class="highlight">
-      <p>Citing proven strategies from those who succeed more than that of their field, backed by published studies and proven results, to increase your quality of life. <strong>#Receipts</strong></p>
-      <p style="margin-top:8px;">Shift your habits and start your journey today.</p>
+    <div class="testimonial">
+      <p>"Agent.EBIresults.Com transformed my understanding of how OpenClaw works with InstantlyClaw. The workshops were insightful and engaging, offering tremendous value right from my first session."</p>
+      <p class="author">— Jonathan M.</p>
+    </div>
+    
+    <div class="testimonial">
+      <p>"The OpenClaw workshop at Agent.EBIresults.Com was exceptional. The instructors made complex concepts easy to grasp, even for a beginner like me. Truly a remarkable learning experience."</p>
+      <p class="author">— Emily R.</p>
+    </div>
+    
+    <div class="testimonial">
+      <p>"Engaging with Agent.EBIresults.Com has been a rewarding journey. Their workshops provided me with the skills and confidence I needed with zero prior experience. Highly recommended."</p>
+      <p class="author">— Michael B.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px;">
-      <div style="background:#0f172a;border-radius:12px;padding:20px;border:1px solid #334155;">
-        <h3 style="color:#22c55e;font-size:16px;margin-bottom:6px;">🌿 Improve Your Health</h3>
-        <p style="color:#94a3b8;font-size:13px;">Reclaim the dismissed natural healing modalities that work. Shortcuts that cost pennies per day to alleviate aches and tightness within hours.</p>
-      </div>
-      <div style="background:#0f172a;border-radius:12px;padding:20px;border:1px solid #334155;">
-        <h3 style="color:#22c55e;font-size:16px;margin-bottom:6px;">💰 Build Wealth</h3>
-        <p style="color:#94a3b8;font-size:13px;">Wealthy people have 7+ streams of income, invest in real estate, keep low taxable income and follow leaders to spend less running their businesses using these strategies.</p>
-      </div>
-      <div style="background:#0f172a;border-radius:12px;padding:20px;border:1px solid #334155;">
-        <h3 style="color:#22c55e;font-size:16px;margin-bottom:6px;">🚀 Supercharge Your Sales</h3>
-        <p style="color:#94a3b8;font-size:13px;">Online marketing and branding strategies — THE EASY WAY. Website, Blog, Social Media, Content Marketing, Email, SMS, Online Advertising, SEO, CRM, Analytics. All automated, integrated, and done WITH YOU in 20 min.</p>
-      </div>
-      <div style="background:#0f172a;border-radius:12px;padding:20px;border:1px solid #334155;">
-        <h3 style="color:#22c55e;font-size:16px;margin-bottom:6px;">📈 Lead Generation Engine</h3>
-        <p style="color:#94a3b8;font-size:13px;">Add to your network and get more sales using the lead generating engine that turns targeted prospects into customers that bring referrals.</p>
-      </div>
-      <div style="background:#0f172a;border-radius:12px;padding:20px;border:1px solid #334155;">
-        <h3 style="color:#22c55e;font-size:16px;margin-bottom:6px;">🔄 Continuity Plan</h3>
-        <p style="color:#94a3b8;font-size:13px;">Start TODAY! Build your favorite dream job or hobby into your strongest stream of income using only your phone, so you get paid through your golden years using your FREE digital system, without going into the office.</p>
-      </div>
-    </div>
-  </div>
+    <hr>
 
-  <!-- ════════════════════════════════════════════ -->
-  <!-- FREE SCAN — AI Readiness Check              -->
-  <!-- ════════════════════════════════════════════ -->
-  <div class="scan-section" id="scan">
-    <h2>🔍 Free AI Readiness Scan</h2>
-    <p class="scan-sub">93 million white-collar jobs will be replaced by AI. The businesses that get <strong>found</strong> on AI searches will replace them. Check yours in 30 seconds.</p>
+    <!-- Registration Form Section -->
+    <h2 id="workshop-form">AI Agent Automation Workshop</h2>
+    <p style="color:#5a7a5a;">Learn OpenClaw, InstantlyClaw & Software That Gets Businesses FOUND on AI</p>
 
-    <div class="scan-form">
-      <div class="field">
-        <label>Your Website URL</label>
-        <input type="url" id="scan-url" placeholder="https://yourbusiness.com">
-      </div>
-      <div class="field">
-        <label>Your Email</label>
-        <input type="email" id="scan-email" placeholder="you@example.com">
-      </div>
-      <div class="field">
-        <label>Your Name</label>
-        <input type="text" id="scan-name" placeholder="Optional">
-      </div>
-      <div class="field">
-        <label>Phone (for SMS results — optional)</label>
-        <input type="tel" id="scan-phone" placeholder="+1 555-123-4567">
-      </div>
-      <button id="scan-btn" class="scan-btn" onclick="startScan()">🔍 Run My Free Scan</button>
-      <p style="text-align:center;color:#475569;font-size:11px;margin-top:10px;">Read-only scan. We never modify your website.</p>
+    <div class="card">
+      <p><strong>Weekly Workshops:</strong> In-person & Virtual via Zoom</p>
+      <p><strong>Learn new skills that can make you extra money</strong></p>
     </div>
 
-    <!-- Scan Results -->
-    <div id="scan-results" style="display:none;margin-top:24px;padding:24px;background:#0f172a;border-radius:12px;border:1px solid #334155;">
-      <div style="text-align:center;">
-        <div id="score-ring" style="width:80px;height:80px;border-radius:50%;border:5px solid #22c55e;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;margin:0 auto 8px;color:#22c55e;">--</div>
-        <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;">Your AI Readiness Score</p>
+    <form id="workshopForm" style="margin:24px 0;">
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:14px;">Full Name <span style="color:#b87333;">*</span></label>
+        <input type="text" name="fullName" placeholder="John Smith" required style="width:100%;padding:12px;border:2px solid #d4ddd4;border-radius:8px;font-size:16px;font-family:Georgia,serif;">
       </div>
-      <div id="cat-results"></div>
-      <p style="text-align:center;color:#64748b;font-size:13px;margin-top:16px;">✅ Full report emailed to you</p>
-      <button onclick="resetScan()" style="display:block;margin:12px auto 0;padding:10px 24px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;font-size:13px;">Scan Another</button>
-    </div>
-    <div id="scan-error" style="display:none;background:#7f1d1d;border:1px solid #ef4444;border-radius:12px;padding:16px;margin-top:16px;color:#fca5a5;font-size:14px;text-align:center;"></div>
-  </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:14px;">Phone Number <span style="color:#b87333;">*</span></label>
+        <input type="tel" name="phone" placeholder="(555) 123-4567" required style="width:100%;padding:12px;border:2px solid #d4ddd4;border-radius:8px;font-size:16px;font-family:Georgia,serif;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:14px;">Email Address <span style="color:#b87333;">*</span></label>
+        <input type="email" name="email" placeholder="john@example.com" required style="width:100%;padding:12px;border:2px solid #d4ddd4;border-radius:8px;font-size:16px;font-family:Georgia,serif;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:14px;">City & State <span style="color:#b87333;">*</span></label>
+        <input type="text" name="location" placeholder="e.g., Chicago, IL" required style="width:100%;padding:12px;border:2px solid #d4ddd4;border-radius:8px;font-size:16px;font-family:Georgia,serif;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:4px;font-size:14px;">Preferred Workshop Type <span style="color:#b87333;">*</span></label>
+        <select name="workshopType" required style="width:100%;padding:12px;border:2px solid #d4ddd4;border-radius:8px;font-size:16px;font-family:Georgia,serif;">
+          <option value="">Select one...</option>
+          <option value="in-person">In-person (Local Events)</option>
+          <option value="virtual">Virtual (Zoom)</option>
+          <option value="both">Both Options</option>
+        </select>
+      </div>
+      <button type="submit" style="width:100%;background:#3a5a3a;color:#fff;padding:16px;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;font-family:Georgia,serif;">Reserve My Spot</button>
+    </form>
 
-  <!-- How It Works -->
-  <div class="how">
-    <h2>⚡ How It Works</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="icon-wrap">1</div>
-        <h3>Enter Your URL</h3>
-        <p>Paste any business website. We check 6 AI visibility categories instantly.</p>
-      </div>
-      <div class="step">
-        <div class="icon-wrap">2</div>
-        <h3>Get Your Score</h3>
-        <p>See exactly what's working, what's broken, and what to fix first — emailed to you.</p>
-      </div>
-      <div class="step">
-        <div class="icon-wrap">3</div>
-        <h3>Let Us Fix It</h3>
-        <p>Choose a tier below. We install everything. You start getting found on AI search.</p>
-      </div>
+    <p style="font-size:13px;color:#8b9d8b;text-align:center;">You'll be redirected to select your workshop time after registration.</p>
+
+    <div class="card" style="background:#f0ede8;">
+      <p><strong>FREE Workshop Includes:</strong></p>
+      <ul style="font-size:14px;color:#5a7a5a;line-height:1.8;padding-left:20px;margin-top:8px;">
+        <li>No experience required — we teach everything</li>
+        <li>MUST HAVE A COMPUTER to participate</li>
+        <li>Learn the skills to put on your resume that ALL BUSINESS OWNERS WILL REQUIRE, even if you have no tech skills — because they aren't necessary!</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>— <strong>Angela</strong> with EBI Results</p>
+      <p>📞 508-797-2461</p>
+      <p><strong>Text your Name, Email, Website & Phone to 508-797-2461</strong></p>
+      <p style="font-style:italic;">Questions are answered in the order they are received</p>
+      <p>🌐 <a href="https://agent.ebiresults.com"><strong>agent.ebiresults.com</strong></a> — <span style="color:#b87333;">Learn AI Skills For FREE</span></p>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════ -->
-  <!-- 3-TIER PRICING                              -->
-  <!-- ════════════════════════════════════════════ -->
-  <div class="pricing" id="pricing">
-    <h2>💰 Choose Your Path</h2>
-    <p class="pricing-sub">Qualified businesses only. You pay after results start coming in.</p>
-
-    <div class="tiers">
-
-      <!-- Tier 1: Starter -->
-      <div class="tier">
-        <h3>🌱 Starter</h3>
-        <p style="font-size:12px;color:#64748b;">Small Business / Solo</p>
-        <div class="price">$197<sub>/mo</sub></div>
-        <ul>
-          <li><span class="check">✓</span> AI Readiness setup (schema, llms.txt, GBP)</li>
-          <li><span class="check">✓</span> Monthly AI visibility report</li>
-          <li><span class="check">✓</span> 1 citation fix per month</li>
-          <li><span class="check">✓</span> Email support</li>
-          <li><span class="check">✓</span> Payback triggered at $2,000 in new revenue</li>
-        </ul>
-        <button class="cta outline" onclick="bookCall('starter')">Get Started</button>
-      </div>
-
-      <!-- Tier 2: Growth (Featured) -->
-      <div class="tier featured">
-        <div class="ribbon">⭐ MOST POPULAR</div>
-        <h3>📈 Growth</h3>
-        <p style="font-size:12px;color:#64748b;">Medium Business / Team</p>
-        <div class="price">$497<sub>/mo</sub></div>
-        <ul>
-          <li><span class="check">✓</span> Everything in Starter</li>
-          <li><span class="check">✓</span> Full AI agent setup (OpenClaw automations)</li>
-          <li><span class="check">✓</span> Geo Optimizer + SerpSling AI integration</li>
-          <li><span class="check">✓</span> Monthly content optimization for AI search</li>
-          <li><span class="check">✓</span> 4 citation fixes + NAP audit</li>
-          <li><span class="check">✓</span> Priority email + chat support</li>
-          <li><span class="check">✓</span> Payback triggered at $5,000 in new revenue</li>
-        </ul>
-        <button class="cta primary" onclick="bookCall('growth')">Get Started</button>
-      </div>
-
-      <!-- Tier 3: Enterprise -->
-      <div class="tier">
-        <h3>🏢 Enterprise</h3>
-        <p style="font-size:12px;color:#64748b;">Large Business / Multi-location</p>
-        <div class="price">$997<sub>/mo</sub></div>
-        <ul>
-          <li><span class="check">✓</span> Everything in Growth</li>
-          <li><span class="check">✓</span> Dedicated AI voice calling agent (booking calls)</li>
-          <li><span class="check">✓</span> Multi-location AI visibility</li>
-          <li><span class="check">✓</span> Full referral system setup</li>
-          <li><span class="check">✓</span> Revenue share partnership (33% lifetime)</li>
-          <li><span class="check">✓</span> White-glove onboarding + weekly calls</li>
-          <li><span class="check">✓</span> Payback triggered at $10,000 in new revenue</li>
-        </ul>
-        <button class="cta secondary" onclick="bookCall('enterprise')">Get Started</button>
-      </div>
-
-    </div>
-
-    <!-- Revenue Share Explanation -->
-    <div style="background:#1e293b;border-radius:12px;padding:20px;margin-top:20px;border:1px solid #334155;">
-      <p style="text-align:center;font-size:13px;color:#94a3b8;">
-        <strong style="color:#f59e0b;">📋 How the Payback System Works</strong><br><br>
-        I get <strong style="color:#22c55e;">33% of every sale</strong> from your business for a lifetime — plus any referrals I bring in through our robust referral, testimony, and review system.<br><br>
-        Once you reach <strong id="payback-example">$5,000</strong> in new revenue (the payback threshold for your tier), your monthly system cost kicks in to keep everything ON, connected, and growing your income, leads, and customers.<br><br>
-        <span style="color:#64748b;">Qualified clients only. This isn't for everyone — it's for business owners who are ready to grow and willing to pay for results.</span>
-      </p>
-    </div>
-  </div>
-
-  <!-- Testimonials -->
-  <div class="testimonials">
-    <h2>💬 What Clients Say</h2>
-    <div class="testimonial-grid">
-      <div class="testimonial">
-        <div class="stars">★★★★★</div>
-        <p>"We went from invisible on Google to showing up in AI search results in under a week. Our phone started ringing again."</p>
-        <div class="author">— Mike P., Plumbing Contractor (Nashville)</div>
-      </div>
-      <div class="testimonial">
-        <div class="stars">★★★★★</div>
-        <p>"The AI Readiness Scan showed us exactly what was broken. They fixed everything in one day. Best $49 I've spent on my business."</p>
-        <div class="author">— Sarah L., Fitness Studio Owner (San Diego)</div>
-      </div>
-    </div>
-    <p style="text-align:center;color:#64748b;font-size:13px;margin-top:12px;">More testimonials coming as we grow. Want to be next?</p>
-  </div>
-
-  <!-- Regions -->
-  <div class="regions">
-    <h2>📍 Local Office Locations</h2>
-    <div class="region-grid">
-      <div class="region-card">
-        <div class="icon">🌾</div>
-        <div><h3>Western KY / Nashville, TN</h3><p>In-person workshops available</p></div>
-      </div>
-      <div class="region-card">
-        <div class="icon">🌊</div>
-        <div><h3>San Diego, CA</h3><p>Pacific Beach & surrounding areas</p></div>
-      </div>
-      <div class="region-card">
-        <div class="icon">🏛️</div>
-        <div><h3>Central, MA / South Coast, MA</h3><p>Remote support & virtual workshops</p></div>
-      </div>
-      <div class="region-card">
-        <div class="icon">🏖️</div>
-        <div><h3>Cape Cod, MA</h3><p>Remote support & virtual workshops</p></div>
-      </div>
-      <div class="region-card">
-        <div class="icon">🌐</div>
-        <div><h3>Online</h3><p>Virtual workshops — anywhere</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Final CTA -->
-  <div class="cta-section" id="contact">
-    <h2>Track Every Dollar</h2>
-    <p>Marketing dollars that come back with interest. Health solutions that reverse root causes.<br>Both tracked, measured, and working for you.</p>
-    <a href="https://calendly.com/getatrust/ebi-results-call" class="big-btn">📅 Book Your Discovery Call</a>
-    <p style="margin-top:12px;font-size:13px;color:#475569;">FREE 15-minute strategy session. No pitch — just a plan.</p>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="social">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
-      <a href="#"><i class="fab fa-x-twitter"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-    </div>
-    <p>Phone: <a href="tel:5087972461">508-797-2461</a> — text me hello!</p>
-    <p>Email: <a href="mailto:14calder@gmail.com">14calder@gmail.com</a></p>
-    <p>© 2026 Outside WITH Renée | EBI Results — Evidence-Based Improvement</p>
-    <p><a href="#">Terms &amp; Conditions</a> · <a href="#">Privacy Policy</a></p>
-  </footer>
-
-</div>
-
-<script>
-// ── Scan Logic ──
-async function startScan() {
-  const url = document.getElementById('scan-url').value.trim();
-  const email = document.getElementById('scan-email').value.trim();
-  const name = document.getElementById('scan-name').value.trim();
-  const phone = document.getElementById('scan-phone').value.trim();
-  const btn = document.getElementById('scan-btn');
-  const error = document.getElementById('scan-error');
-
-  error.style.display = 'none';
-  if (!url || !email) {
-    error.textContent = 'Please enter a website URL and your email address.';
-    error.style.display = 'block';
-    return;
-  }
-
-  let cleanUrl = url;
-  if (!url.startsWith('http://') && !url.startsWith('https://')) cleanUrl = 'https://' + url;
-
-  btn.disabled = true;
-  btn.textContent = 'Scanning...';
-
-  try {
-    // Capture lead
-    await fetch('/api/scan-lead', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ url: cleanUrl, email, name, phone })
+  <script>
+    document.getElementById('workshopForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        name: this.fullName.value,
+        phone: this.phone.value,
+        email: this.email.value,
+        location: this.location.value,
+        type: this.workshopType.value,
+        timestamp: new Date().toISOString()
+      };
+      localStorage.setItem('workshopRegistration', JSON.stringify(formData));
+      window.location.href = 'https://calendly.com/YOUR-CALENDLY-LINK-HERE';
     });
-
-    // Run scan
-    const res = await fetch('/api/run-scan', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ url: cleanUrl, email, name, phone })
-    });
-    const result = await res.json();
-    if (result.error) throw new Error(result.error);
-
-    showResults(result);
-    btn.textContent = '🔍 Run Another Scan';
-    btn.disabled = false;
-
-  } catch (err) {
-    error.textContent = 'Scan error: ' + (err.message || 'Please try again.');
-    error.style.display = 'block';
-    btn.textContent = '🔍 Try Again';
-    btn.disabled = false;
-  }
-}
-
-function showResults(data) {
-  const score = data.score || 0;
-  const ring = document.getElementById('score-ring');
-  const color = score < 40 ? '#ef4444' : score < 70 ? '#f59e0b' : '#22c55e';
-  ring.style.borderColor = color;
-  ring.style.color = color;
-  ring.textContent = score;
-
-  const cats = document.getElementById('cat-results');
-  cats.innerHTML = '';
-  const categories = [
-    { key: 'crawlable', icon: '🤖', label: 'AI Crawlability' },
-    { key: 'schema', icon: '🏷️', label: 'Schema Markup' },
-    { key: 'gbp', icon: '📍', label: 'Google Business Profile' },
-    { key: 'content', icon: '✍️', label: 'AI-Friendly Content' },
-    { key: 'llms', icon: '📄', label: 'llms.txt Priority' },
-    { key: 'citations', icon: '🔗', label: 'Citation Consistency' }
-  ];
-  categories.forEach(c => {
-    const s = data[c.key] || 'bad';
-    const sc = s === 'good' ? '#22c55e' : s === 'warn' ? '#f59e0b' : '#ef4444';
-    const sl = s === 'good' ? '✅' : s === 'warn' ? '⚠️' : '❌';
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;font-size:13px;';
-    row.innerHTML = `<span>${c.icon} ${c.label}</span><span style="color:${sc}">${sl} ${s.charAt(0).toUpperCase()+s.slice(1)}</span>`;
-    cats.appendChild(row);
-  });
-
-  document.querySelector('.scan-form').style.display = 'none';
-  document.getElementById('scan-results').style.display = 'block';
-}
-
-function resetScan() {
-  document.getElementById('scan-url').value = '';
-  document.getElementById('scan-email').value = '';
-  document.getElementById('scan-name').value = '';
-  document.getElementById('scan-phone').value = '';
-  document.getElementById('scan-results').style.display = 'none';
-  document.querySelector('.scan-form').style.display = 'block';
-  document.getElementById('scan-btn').textContent = '🔍 Run My Free Scan';
-}
-
-function bookCall(tier) {
-  // Update the payback threshold in the explanation
-  const thresh = tier === 'starter' ? '$2,000' : tier === 'growth' ? '$5,000' : '$10,000';
-  document.getElementById('payback-example').textContent = thresh;
-  window.open('https://calendly.com/getatrust/ebi-results-call', '_blank');
-}
-</script>
-
+  </script>
 </body>
 </html>
