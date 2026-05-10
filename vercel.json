@@ -1,16 +1,16 @@
 {
   "version": 2,
+  "public": true,
   "builds": [
     {
-      "src": "server.js",
+      "src": "api/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/scan.html", "dest": "/scan.html" },
-    { "src": "/bonus.html", "dest": "/bonus.html" },
-    { "src": "/index.html", "dest": "/index.html" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/server.js" }
+    { "src": "/", "dest": "/public/index.html" },
+    { "src": "/scan.html", "dest": "/public/scan.html" },
+    { "src": "/bonus.html", "dest": "/public/bonus.html" },
+    { "src": "/api/(.*)", "dest": "/api/server.js" }
   ]
 }

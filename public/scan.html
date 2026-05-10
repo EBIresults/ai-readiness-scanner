@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Readiness Scanner — Check Any Business</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#0f172a; color:#e2e8f0; line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }
+.container { max-width:700px; margin:0 auto; padding:40px 20px; flex:1; }
+
+h1 { font-size:34px; color:#f8fafc; text-align:center; margin-bottom:6px; }
+.subtitle { color:#94a3b8; font-size:16px; text-align:center; margin-bottom:32px; }
+
+.scan-card { background:#1e293b; border-radius:16px; padding:32px; border:1px solid #334155; margin-bottom:24px; }
+.scan-card h2 { font-size:18px; color:#f8fafc; margin-bottom:20px; text-align:center; }
+
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-grid .full { grid-column:1 / -1; }
+.scan-card label { display:block; font-size:12px; color:#94a3b8; margin-bottom:4px; font-weight:500; }
+.scan-card input { width:100%; padding:12px 16px; border-radius:10px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; font-size:15px; outline:none; transition:border .2s; }
+.scan-card input:focus { border-color:#6366f1; }
+.scan-card input::placeholder { color:#475569; }
+.scan-card .req { color:#f87171; font-size:11px; margin-left:2px; }
+
+.scan-btn { width:100%; padding:18px; border:none; border-radius:14px; font-size:18px; font-weight:700; cursor:pointer; transition:all .2s; background:#22c55e; color:#0f172a; margin-top:20px; }
+.scan-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(34,197,94,0.3); }
+.scan-btn:disabled { background:#334155; color:#64748b; cursor:not-allowed; transform:none; box-shadow:none; }
+.scan-btn.loading { background:#6366f1; }
+
+/* Results */
+.results-box { display:none; background:#1e293b; border-radius:16px; padding:32px; border:1px solid #334155; margin-bottom:24px; }
+.results-box.visible { display:block; }
+.results-box h2 { font-size:20px; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.score-ring { width:100px; height:100px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:32px; font-weight:800; border:6px solid #22c55e; }
+.score-ring.low { border-color:#ef4444; color:#ef4444; }
+.score-ring.medium { border-color:#f59e0b; color:#f59e0b; }
+.score-ring.high { border-color:#22c55e; color:#22c55e; }
+
+.cat-row { display:flex; align-items:center; padding:10px 0; border-bottom:1px solid #1e293b; gap:12px; }
+.cat-row:last-child { border:none; }
+.cat-row .status { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.cat-row .status.good { background:#22c55e; }
+.cat-row .status.warn { background:#f59e0b; }
+.cat-row .status.bad { background:#ef4444; }
+.cat-row .label { flex:1; font-size:14px; }
+.cat-row .detail { font-size:12px; color:#64748b; }
+
+.delivery-options { background:#1e293b; border-radius:12px; padding:20px; margin-top:24px; border:1px solid #334155; }
+.delivery-options p { color:#94a3b8; font-size:13px; text-align:center; margin-bottom:12px; }
+.delivery-options .badges { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+.delivery-options .badge { background:#0f172a; border:1px solid #334155; border-radius:8px; padding:8px 16px; font-size:12px; color:#94a3b8; display:flex; align-items:center; gap:6px; }
+.delivery-options .badge .icon { font-size:16px; }
+
+.how-it-works { margin:32px 0; }
+.how-it-works h2 { font-size:18px; text-align:center; margin-bottom:20px; }
+.steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.step { background:#1e293b; border-radius:12px; padding:16px; text-align:center; border:1px solid #334155; }
+.step .num { width:28px; height:28px; border-radius:50%; background:#6366f1; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-size:13px; font-weight:700; }
+.step h3 { font-size:14px; color:#e2e8f0; margin-bottom:4px; }
+.step p { font-size:12px; color:#64748b; }
+
+footer { text-align:center; color:#475569; font-size:12px; padding:20px; border-top:1px solid #1e293b; }
+
+/* Error */
+.error-msg { display:none; background:#7f1d1d; border:1px solid #ef4444; border-radius:12px; padding:16px; margin:16px 0; color:#fca5a5; font-size:14px; text-align:center; }
+
+/* Status bar */
+.status-bar { display:none; position:fixed; bottom:0; left:0; right:0; background:#1e293b; border-top:1px solid #334155; padding:12px 20px; text-align:center; font-size:13px; color:#94a3b8; z-index:100; }
+.status-bar .spinner { display:inline-block; width:14px; height:14px; border:2px solid #334155; border-top-color:#6366f1; border-radius:50%; animation:spin .8s linear infinite; margin-right:8px; vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+@media (max-width:600px) {
+  .form-grid { grid-template-columns:1fr; }
+  .steps { grid-template-columns:1fr; }
+  h1 { font-size:24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🔍 AI Readiness Scanner</h1>
+  <p class="subtitle">Check if any business is visible to AI search — in 30 seconds</p>
+
+  <!-- Scan Form -->
+  <div class="scan-card">
+    <h2>Enter a Business URL to Scan</h2>
+    <p style="text-align:center;color:#94a3b8;font-size:13px;margin-bottom:16px;">Your results will be emailed and sent via text if you provide a phone number.</p>
+
+    <div class="form-grid">
+      <div class="full">
+        <label>Website URL <span class="req">*required</span></label>
+        <input type="url" id="scan-url" placeholder="https://yourbusiness.com" required>
+      </div>
+      <div>
+        <label>Your Email <span class="req">*required</span></label>
+        <input type="email" id="scan-email" placeholder="you@example.com" required>
+      </div>
+      <div>
+        <label>Your Name</label>
+        <input type="text" id="scan-name" placeholder="Optional">
+      </div>
+      <div class="full">
+        <label>Phone Number (for SMS results)</label>
+        <input type="tel" id="scan-phone" placeholder="+1 555-123-4567 — optional, but needed for text delivery">
+      </div>
+    </div>
+
+    <button id="scan-btn" class="scan-btn">🔍 Run AI Readiness Scan</button>
+  </div>
+
+  <!-- How It Works -->
+  <div class="how-it-works">
+    <h2>⚡ How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Enter URL</h3>
+        <p>Paste any business website and your email</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>AI Checks 6 Areas</h3>
+        <p>Crawlability, Schema, GBP, Content, llms.txt, Citations</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Get Your Report</h3>
+        <p>Delivered to email &amp; text. View on any device.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results (hidden initially) -->
+  <div class="results-box" id="results-box">
+    <h2>📊 Scan Complete</h2>
+    <div class="score-ring" id="score-ring">--</div>
+    <p style="text-align:center;color:#94a3b8;font-size:14px;margin-bottom:20px;" id="score-label">Score out of 100</p>
+
+    <div id="cat-results"></div>
+
+    <div class="delivery-options">
+      <p>✅ Your report has been sent to your email. If you provided a phone number, it's been sent via text too.</p>
+      <div class="badges">
+        <span class="badge"><span class="icon">📱</span> Phone + Computer friendly</span>
+        <span class="badge"><span class="icon">📧</span> Emailed to you</span>
+        <span class="badge"><span class="icon">💾</span> Saved to your account</span>
+      </div>
+    </div>
+
+    <button class="scan-btn" onclick="resetScan()" style="background:#334155;margin-top:16px;">🔁 Scan Another Business</button>
+  </div>
+
+  <!-- Error -->
+  <div class="error-msg" id="error-msg"></div>
+
+  <footer>
+    <p>Secure scan — read only. We never modify your website.</p>
+  </footer>
+</div>
+
+<!-- Status Bar -->
+<div class="status-bar" id="status-bar">
+  <span class="spinner"></span>
+  <span id="status-text">Scanning your website...</span>
+</div>
+
+<script>
+document.getElementById('scan-btn').addEventListener('click', async function() {
+  const url = document.getElementById('scan-url').value.trim();
+  const email = document.getElementById('scan-email').value.trim();
+  const name = document.getElementById('scan-name').value.trim();
+  const phone = document.getElementById('scan-phone').value.trim();
+  const btn = this;
+  const statusBar = document.getElementById('status-bar');
+  const statusText = document.getElementById('status-text');
+  const errorMsg = document.getElementById('error-msg');
+
+  // Validate
+  errorMsg.style.display = 'none';
+  if (!url || !email) {
+    errorMsg.textContent = 'Please enter a website URL and your email address.';
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  // Validate URL format
+  let cleanUrl = url;
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    cleanUrl = 'https://' + url;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Scanning...';
+  btn.classList.add('loading');
+  statusBar.style.display = 'block';
+  statusText.textContent = 'Connecting to your website...';
+
+  try {
+    // Step 1: Capture lead
+    statusText.textContent = 'Saving your request...';
+    const leadRes = await fetch('/api/lead', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ url: cleanUrl, email, name, phone })
+    });
+
+    // Step 2: Run the scan
+    statusText.textContent = 'Checking AI crawlability...';
+    const scanRes = await fetch('/api/scan', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ url: cleanUrl, email, name, phone })
+    });
+
+    const result = await scanRes.json();
+
+    if (result.error) {
+      throw new Error(result.error);
+    }
+
+    statusText.textContent = 'Generating your report...';
+    await new Promise(r => setTimeout(r, 500));
+
+    // Display results
+    showResults(result);
+
+    statusBar.style.display = 'none';
+    btn.textContent = '🔍 Run Another Scan';
+    btn.classList.remove('loading');
+    btn.disabled = false;
+
+  } catch (err) {
+    statusBar.style.display = 'none';
+    errorMsg.textContent = 'Scan error: ' + (err.message || 'Could not complete scan. Please try again.');
+    errorMsg.style.display = 'block';
+    btn.textContent = '🔍 Try Again';
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+});
+
+function showResults(data) {
+  const score = data.score || 0;
+  const ring = document.getElementById('score-ring');
+  ring.textContent = score;
+
+  if (score < 40) {
+    ring.className = 'score-ring low';
+    document.getElementById('score-label').textContent = 'Low — Needs significant work';
+  } else if (score < 70) {
+    ring.className = 'score-ring medium';
+    document.getElementById('score-label').textContent = 'Medium — Room for improvement';
+  } else {
+    ring.className = 'score-ring high';
+    document.getElementById('score-label').textContent = 'Good — Minor tweaks needed';
+  }
+
+  const cats = document.getElementById('cat-results');
+  cats.innerHTML = '';
+
+  const categories = [
+    { key: 'crawlable', label: '🤖 AI Crawlability', desc: 'Can AI bots access your site?' },
+    { key: 'schema', label: '🏷️ Schema Markup', desc: 'Does AI know you are a real business?' },
+    { key: 'gbp', label: '📍 Google Business Profile', desc: 'Complete and verified?' },
+    { key: 'content', label: '✍️ AI-Friendly Content', desc: 'Does your copy answer AI questions?' },
+    { key: 'llms', label: '📄 llms.txt Priority', desc: 'Have you told AI which pages matter?' },
+    { key: 'citations', label: '🔗 Citation Consistency', desc: 'NAP matches everywhere?' }
+  ];
+
+  categories.forEach(cat => {
+    const status = data[cat.key] || 'unknown';
+    const statusClass = status === 'good' ? 'good' : status === 'warn' ? 'warn' : 'bad';
+    const statusLabel = status === 'good' ? '✅ Good' : status === 'warn' ? '⚠️ Needs Work' : '❌ Missing';
+
+    const row = document.createElement('div');
+    row.className = 'cat-row';
+    row.innerHTML = `
+      <span class="status ${statusClass}"></span>
+      <span class="label"><strong>${cat.label}</strong><br><span class="detail">${cat.desc}</span></span>
+      <span style="font-size:13px;white-space:nowrap;color:${status === 'good' ? '#22c55e' : status === 'warn' ? '#f59e0b' : '#ef4444'}">${statusLabel}</span>
+    `;
+    cats.appendChild(row);
+  });
+
+  document.querySelector('.scan-card').style.display = 'none';
+  document.querySelector('.how-it-works').style.display = 'none';
+  document.getElementById('results-box').classList.add('visible');
+}
+
+function resetScan() {
+  document.getElementById('scan-url').value = '';
+  document.getElementById('scan-email').value = '';
+  document.getElementById('scan-name').value = '';
+  document.getElementById('scan-phone').value = '';
+  document.getElementById('results-box').classList.remove('visible');
+  document.getElementById('error-msg').style.display = 'none';
+  document.querySelector('.scan-card').style.display = 'block';
+  document.querySelector('.how-it-works').style.display = 'block';
+  document.getElementById('scan-btn').textContent = '🔍 Run AI Readiness Scan';
+  document.getElementById('scan-btn').disabled = false;
+  document.getElementById('scan-btn').classList.remove('loading');
+}
+</script>
+</body>
+</html>
