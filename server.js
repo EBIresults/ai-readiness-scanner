@@ -32,7 +32,7 @@ async function pushToClose({ name, email, phone, url, score, issues, scannedBy }
     (email && email.toLowerCase() === RENEE_EMAIL.toLowerCase());
 
   const pipelineId = 'Truh7BlF8e15iIX0n9rFNkVBwVx8O0u4N7Jw5vWCSvd'; // The only pipeline ID from Close
-  const statusType = isReneeScan ? 'HOT LEAD' : 'Potential';
+  const statusType = isReneeScan ? 'Potential' : 'HOT LEAD';
 
   const body = {
     name: name || email?.split('@')[0] || 'Unknown Lead',
@@ -47,7 +47,7 @@ async function pushToClose({ name, email, phone, url, score, issues, scannedBy }
     "custom.lf_cf_custom_funnel_source": 'AI Readiness Funnel',
     "custom.lf_cf_custom_ai_readiness_score": String(score || 0),
     "custom.lf_cf_custom_issues_found": String(issues || 0),
-    description: `Scan Type: ${isReneeScan ? 'Renee Scan' : 'Self Scan'}\nWebsite: ${url}\nAI Readiness Score: ${score}/100\nIssues: ${issues}\nTag: ${isReneeScan ? 'Renee Scan → HOT LEAD' : 'Self Scan → Nurture'}`
+    description: `Scan Type: ${isReneeScan ? 'Renee Scan' : 'Self Scan'}\nWebsite: ${url}\nAI Readiness Score: ${score}/100\nIssues: ${issues}\nTag: ${isReneeScan ? 'Renee Scan → Nurture (testing)' : 'Self Scan → HOT LEAD'}`
   };
 
   try {
